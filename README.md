@@ -19,3 +19,6 @@ The project repersents a POC to connect to a remotely hosted restWebService whic
 
 ### Who do I talk to? ###
 Please feel free to raise an issue or you can contact me at : sumit.gaur@optimumalgorithms.com
+
+### Special Thanks ###
+Special thanks to [Pankaj Agrawal](pnkaj.agrwal@gmail.com) for figuring out Authentication Filter issue

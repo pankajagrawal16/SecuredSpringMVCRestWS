@@ -1,12 +1,12 @@
 # README #
 
-The project repersents a POC to connect to a remotely hosted restWebService from any Android Based API
+The project repersents a POC to connect to a remotely hosted restWebService which is secured using Spring Security. The security mechanism is role based and the credentials or the user details can be fetched from the DataBase against which the authentication needs to be performed. The POC shows both stateful and stateless session management for browser or form-based-login and restTemplate based respectively.
 
 ### What is this repository for? ###
 
 * Secured Spring MVC based Rest API
 * Ver0.1
-* [Can be used in place of ApacheCXF](http://cxf.apache.org/docs/restful-services.html)
+* Stateful + Stateless
 
 ### How do I get set up? ###
 

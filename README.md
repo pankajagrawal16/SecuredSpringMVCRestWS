@@ -18,5 +18,4 @@ The project repersents a POC to connect to a remotely hosted restWebService whic
 * Try to run the RestClient in test packages
 
 ### Who do I talk to? ###
-
-* sumit.gaur@optimumalgorithms.com
+Please feel free to raise an issue or you can contact me at : sumit.gaur@optimumalgorithms.com

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:sec="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="
+      http://www.springframework.org/schema/security
+      http://www.springframework.org/schema/security/spring-security-3.2.xsd
+      http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+	<!-- Rest authentication entry point configuration -->
+	<http use-expressions="true" create-session="stateless"
+		entry-point-ref="restServicesEntryPoint" authentication-manager-ref="authenticationManagerForRest">
+		<intercept-url pattern="/api/**" access="isAuthenticated()" />
+		<intercept-url pattern="/" access="isAnonymous()" />
+
+		<sec:form-login login-page="/"
+			authentication-success-handler-ref="mySuccessHandler"
+			authentication-failure-handler-ref="myFailureHandler" />
+		<logout />
+
+		<sec:access-denied-handler ref="myAuthenticationAccessDeniedHandler" />
+		<http-basic />
+	</http>
+
+	<!-- Entry point for REST service. -->
+	<beans:bean id="restServicesEntryPoint"
+		class="spring.security.rest.api.security.RestAuthenticationEntryPoint" />
+
+	<beans:bean id="exceptionTranslationFilter"
+		class="org.springframework.security.web.access.ExceptionTranslationFilter">
+		<beans:property name="authenticationEntryPoint" ref="restServicesEntryPoint" />
+	</beans:bean>
+
+	<!-- Connect the custom authentication success handler -->
+	<beans:bean id="mySuccessHandler"
+		class="spring.security.rest.api.security.RestAuthenticationSuccessHandler" />
+	<!-- Using default failure handler -->
+	<beans:bean id="myFailureHandler"
+		class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler" />
+
+	<beans:bean id="myAuthenticationAccessDeniedHandler"
+		class="spring.security.rest.api.security.RestAuthenticationAccessDeniedHandler" />
+
+	<!-- Authentication manager -->
+	<authentication-manager alias="authenticationManagerForRest">
+		<authentication-provider user-service-ref="userDetailsService">
+		</authentication-provider>
+	</authentication-manager>
+
+	<beans:bean id="userDetailsService"
+		class="spring.security.rest.api.security.LoginService" />
+
+
+	<!-- Enable the annotations for defining the secure role -->
+	<global-method-security secured-annotations="enabled" />
+
+
+	<beans:bean
+		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<beans:property name="mediaTypes">
+			<beans:map>
+				<beans:entry key="json" value="application/json" />
+				<beans:entry key="xml" value="text/xml" />
+				<beans:entry key="htm" value="text/html" />
+			</beans:map>
+		</beans:property>
+		<beans:property name="defaultContentType" value="text/html" />
+	</beans:bean>
+
+</beans:beans>
